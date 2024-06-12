@@ -21,7 +21,7 @@ const Login = () => {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white p-8 rounded shadow-md w-96">
-                <img className="mx-auto h-24 w-auto rounded-md mb-4" src="/heaven.png" alt="Logo"/>
+                <img className="logo mx-auto h-24 w-auto rounded-md mb-4" src="/potter.png" alt="Logo"/>
                 <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
                 {/* <p className="text-center mb-4">
                     Or <Link to="/register" className="text-blue-500 hover:underline">register for a new account</Link>
