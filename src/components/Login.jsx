@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { Link ,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -19,47 +19,51 @@ const Login = () => {
     };
 
     return (
-        <div className="login_container overflow-hidden">
-            <div className="login_form_container">
-                <div className="left">
-                    <img className="logo" src="/heaven.png" alt="Logo"/>
-                    <h1 className="text-4xl text-[#E9D3A3] mt-0 mb-5 font-bold">Iniciar Sesión</h1>
+        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+            <div className="bg-white p-8 rounded shadow-md w-96">
+                <h2 className="text-2xl font-bold mb-6 text-center">Sign in to your account</h2>
+                <p className="text-center mb-4">
+                    Or <Link to="/register" className="text-blue-500 hover:underline">register for a new account</Link>
+                </p>
+                <form className="space-y-6" onSubmit={handleSubmit}>
+                    <div>
+                        <label htmlFor="email" className="sr-only">Email address</label>
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            autoComplete="email"
+                            required
+                            className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                            placeholder="Email address"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="password" className="sr-only">Password</label>
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            autoComplete="current-password"
+                            required
+                            className="appearance-none rounded relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
 
-                    <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                        <div className="input_container">
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                autoComplete="email"
-                                required
-                                className="input"
-                                placeholder="Email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                autoComplete="current-password"
-                                required
-                                className="input"
-                                placeholder="Contraseña"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                        <div className="button_container flex justify-center items-center space-x-4">
-                            <button type="submit" className="green_btn">
-                                Iniciar Sesión
-                            </button>
-                            <Link to="/register" className="white_btn flex items-center justify-center">
-                                Registrarse
-                            </Link>
-                        </div>
-                    </form>
-                </div>
+                    <div>
+                        <button
+                            type="submit"
+                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        >
+                            Sign in
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     );

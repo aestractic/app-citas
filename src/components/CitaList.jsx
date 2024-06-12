@@ -33,59 +33,36 @@ const CitaList = () => { // Component name changed to CitaList
     };
 
     return (
-        <div className="bg-white">
-            <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-                <div className="bg-white p-8 rounded-lg shadow-md">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-4">Lista de Citas</h1>
-                    <Link to="/create" className="bg-green-500 text-white px-4 py-2 rounded mb-4 hover:bg-green-700">
+        <div className="bg-gray-900 min-h-screen p-8">
+            <div className="max-w-7xl mx-auto">
+                <div className="flex justify-between items-center mb-6">
+                    <h1 className="text-3xl font-bold text-white">Lista de Citas</h1>
+                    <Link to="/create" className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-blue-500">
                         Agregar Cita
                     </Link>
                 </div>
 
-                {/* Table to display citas */}
-                <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                    <tr>
-                        {/* ... table headers for name, date, image, and actions ... */}
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Nombre
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Fecha
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Imagen
-                        </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Acciones
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {citas.map((cita) => (
-                        <tr key={cita._id}>
-                            {/* ... table cells for name, date, image, and edit/delete buttons ... */}
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                {cita.name}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(cita.date).toLocaleDateString()}</td>
-                            <td className="px-6 py-4 whitespace-nowrap image-cell">
-                                <img
-                                    src={`${import.meta.env.VITE_BACK_URL}${cita.imagen}`}
-                                    alt={cita.name}
-                                    className="h-auto max-h-24 w-full object-contain"
-                                />
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <Link to={`/edit/${cita._id}`} className="text-indigo-600 hover:text-indigo-900 mr-4">Editar</Link>
-                                <button onClick={() => deleteCita(cita._id)} className="text-red-600 hover:text-red-900">
-                                    Eliminar
-                                </button>
-                            </td>
-                        </tr>
+                        <div key={cita._id} className="bg-gray-800 rounded-lg overflow-hidden shadow-md">
+                            <img
+                                src={`${import.meta.env.VITE_BACK_URL}${cita.imagen}`}
+                                alt={cita.name}
+                                className="w-full h-48 object-cover"
+                            />
+                            <div className="p-4">
+                                <h2 className="text-xl font-semibold text-white mb-2">{cita.name}</h2>
+                                <p className="text-gray-300 text-sm mb-2">Fecha: {new Date(cita.date).toLocaleDateString()}</p>
+                                <div className="flex justify-end">
+                                    <Link to={`/edit/${cita._id}`} className="text-indigo-400 hover:text-indigo-600 mr-4">Editar</Link>
+                                    <button onClick={() => deleteCita(cita._id)} className="text-red-400 hover:text-red-600">
+                                        Eliminar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     ))}
-                    </tbody>
-                </table>
+                </div>
             </div>
         </div>
     );
