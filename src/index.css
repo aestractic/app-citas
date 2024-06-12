@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.image-cell {
+  text-align: center !important;
+}
+
+.login_container {
+  @apply w-full min-h-screen bg-[#EEDDB5] flex items-center justify-center; /* Combined classes */
+}
+
+.login_form_container {
+  @apply w-96 h-auto bg-[#262626] rounded-3xl p-10;
+}
+
+.left {
+  @apply flex flex-col items-center justify-center;
+}
+
+.logo {
+  @apply w-80 mb-5; /* Adjust width as needed */
+}
+
+.left h1 {
+  @apply text-4xl text-[#E9D3A3] mt-0 mb-5 font-bold;
+}
+
+.input_container {
+  @apply flex flex-col mb-5;
+}
+
+.input {
+  @apply w-full p-3.5 rounded-lg bg-[#2f2f2f] my-2 text-white text-sm; /* Combined styles */
+}
+
+.error_msg {
+  @apply w-full p-3.5 my-1 text-sm bg-[#f34646] text-white rounded text-center;
+}
+
+.button_container {
+  @apply flex justify-between w-full mt-2;
+}
+
+.white_btn, .green_btn {
+  @apply border-none outline-none py-3 rounded-full w-44 font-bold text-sm cursor-pointer;
+}
+
+.green_btn {
+  @apply bg-[#00c9a7] text-white;
+}
+
+.white_btn {
+  @apply bg-[#b3a07a] text-white;
+}
+
+
+/* Responsive Breakpoints */
+
+/* For tablets and smaller */
+@screen md {
+  .login_form_container {
+    @apply w-80 p-8;
+  }
+
+  .logo {
+    @apply w-72;
+  }
+
+  .input,
+  .button_container {
+    @apply w-72;
+  }
+}
+
+/* For mobile phones and smaller */
+@screen sm {
+  .login_form_container {
+    @apply w-72 p-6;
+  }
+
+  .logo {
+    @apply w-60;
+  }
+
+  .input,
+  .button_container {
+    @apply w-64;
+  }
+
+  .white_btn, .green_btn {
+    @apply w-32 text-xs;
+  }
+}
