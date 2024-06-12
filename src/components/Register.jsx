@@ -21,6 +21,11 @@ const Register = () => {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white p-8 rounded shadow-md w-96">
+            <img
+                    src="./public/potter.png" // Replace with your image path
+                    alt="Login"
+                    className="mx-auto h-24 w-auto rounded-md mb-4"
+                />
                 <h2 className="text-2xl font-bold mb-6 text-center">Register your account</h2>
                 <p className="text-center mb-4">
                     Or <a href="/login" className="text-blue-500 hover:underline">sign in to your account</a>
