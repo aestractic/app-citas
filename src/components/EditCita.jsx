@@ -4,9 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const EditCita = () => {
     const [cita, setCita] = useState({
-        name: '',
+        propietario: '',
+        mascota: '',
+        raza: '',
         date: '',
-        description: '',
+        notas: '',
+        estado: 'programada',
+        costo: 0,
         imagen: null,
     });
     const [error, setError] = useState(null);
@@ -31,23 +35,27 @@ const EditCita = () => {
             }
         };
         fetchCita();
-    }, []);
+    }, [id]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!cita.name || !cita.date) {
-            setError('Por favor, llena todos los campos.');
+        if (!cita.propietario || !cita.mascota || !cita.date) {
+            setError('Por favor, llena los campos obligatorios (Propietario, Mascota y Fecha).');
             return;
         }
 
         try {
             const token = localStorage.getItem('token');
             const formData = new FormData();
-            formData.append('name', cita.name);
+            formData.append('propietario', cita.propietario);
+            formData.append('mascota', cita.mascota);
+            formData.append('raza', cita.raza);
             formData.append('date', cita.date);
-            // formData.append('description', cita.description);
-            if (cita.imagen) {
+            formData.append('notas', cita.notas);
+            formData.append('estado', cita.estado);
+            formData.append('costo', cita.costo);
+            if (cita.imagen instanceof File) {
                 formData.append('imagen', cita.imagen);
             }
 
@@ -56,12 +64,13 @@ const EditCita = () => {
             });
             navigate('/');
         } catch (error) {
-            setError(error.message || 'Error al actualizar la cita');
+            setError(error.response?.data?.message || 'Error al actualizar la cita');
         }
     };
 
     const handleChange = (e) => {
-        setCita({ ...cita, [e.target.name]: e.target.value });
+        const value = e.target.type === 'number' ? parseFloat(e.target.value) : e.target.value;
+        setCita({ ...cita, [e.target.name]: value });
     };
 
     const handleFileChange = (e) => {
@@ -76,14 +85,44 @@ const EditCita = () => {
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-white">
-                            Nombre
+                        <label htmlFor="propietario" className="block text-sm font-medium text-white">
+                            Nombre del Propietario
                         </label>
                         <input
                             type="text"
-                            id="name"
-                            name="name"
-                            value={cita.name}
+                            id="propietario"
+                            name="propietario"
+                            value={cita.propietario}
+                            onChange={handleChange}
+                            className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="mascota" className="block text-sm font-medium text-white">
+                            Nombre de la Mascota
+                        </label>
+                        <input
+                            type="text"
+                            id="mascota"
+                            name="mascota"
+                            value={cita.mascota}
+                            onChange={handleChange}
+                            className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="raza" className="block text-sm font-medium text-white">
+                            Tipo
+                        </label>
+                        <input
+                            type="text"
+                            id="raza"
+                            name="raza"
+                            value={cita.raza}
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
                         />
@@ -100,7 +139,54 @@ const EditCita = () => {
                             value={cita.date}
                             onChange={handleChange}
                             className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
+                            required
                         />
+                    </div>
+
+                    <div>
+                        <label htmlFor="estado" className="block text-sm font-medium text-white">
+                            Estado
+                        </label>
+                        <select
+                            id="estado"
+                            name="estado"
+                            value={cita.estado}
+                            onChange={handleChange}
+                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        >
+                            <option value="programada">Programada</option>
+                            <option value="completada">Completada</option>
+                            <option value="cancelada">Cancelada</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label htmlFor="costo" className="block text-sm font-medium text-white">
+                            Costo
+                        </label>
+                        <input
+                            type="number"
+                            id="costo"
+                            name="costo"
+                            value={cita.costo}
+                            onChange={handleChange}
+                            className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
+                            step="0.01"
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="notas" className="block text-sm font-medium text-white">
+                            Notas
+                        </label>
+                        <textarea
+                            id="notas"
+                            name="notas"
+                            value={cita.notas}
+                            onChange={handleChange}
+                            rows="3"
+                            className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
+                        ></textarea>
                     </div>
 
                     <div>
@@ -111,17 +197,22 @@ const EditCita = () => {
                             type="file"
                             id="imagen"
                             onChange={handleFileChange}
-                            className="mt-1 block w-full"
+                            className="mt-1 block w-full text-white"
                         />
                         {cita.imagen && (
                             <div className="mt-2">
-                                <img src={`${import.meta.env.VITE_BACK_URL}${cita.imagen}`} alt={cita.name} className="h-auto max-h-24 w-full object-contain" />
+                                <img
+                                    src={cita.imagen instanceof File ? URL.createObjectURL(cita.imagen) : `${import.meta.env.VITE_BACK_URL}${cita.imagen}`}
+                                    alt={cita.mascota}
+                                    className="h-auto max-h-24 w-full object-contain"
+                                />
                             </div>
                         )}
                     </div>
 
                     <div className="flex justify-end">
-                        <button type="button" onClick={() => navigate('/')} className="bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-md py-2 px-4 mr-2">
+                        <button type="button" onClick={() => navigate('/')}
+                                className="bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-md py-2 px-4 mr-2">
                             Cancelar
                         </button>
                         <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white rounded-md py-2 px-4">

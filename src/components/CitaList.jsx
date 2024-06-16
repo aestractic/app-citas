@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const CitaList = () => { // Component name changed to CitaList
-    const [citas, setCitas] = useState([]); // Use citas instead of products
+const CitaList = () => {
+    const [citas, setCitas] = useState([]);
     const token = localStorage.getItem('token');
 
     useEffect(() => {
@@ -45,17 +45,26 @@ const CitaList = () => { // Component name changed to CitaList
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {citas.map((cita) => (
                         <div key={cita._id} className="bg-gray-800 rounded-lg overflow-hidden shadow-md">
-                            <img
-                                src={`${import.meta.env.VITE_BACK_URL}${cita.imagen}`}
-                                alt={cita.name}
-                                className="w-full h-48 object-cover"
-                            />
+                            {cita.imagen && (
+                                <img
+                                    src={`${import.meta.env.VITE_BACK_URL}${cita.imagen}`}
+                                    alt={`Imagen de ${cita.mascota}`}
+                                    className="w-full h-48 object-cover"
+                                />
+                            )}
                             <div className="p-4">
-                                <h2 className="text-xl font-semibold text-white mb-2">{cita.name}</h2>
+                                <h2 className="text-xl font-semibold text-white mb-2">{cita.mascota}</h2>
+                                <p className="text-gray-300 text-sm mb-2">Propietario: {cita.propietario}</p>
+                                <p className="text-gray-300 text-sm mb-2">Tipo: {cita.raza}</p>
                                 <p className="text-gray-300 text-sm mb-2">Fecha: {new Date(cita.date).toLocaleDateString()}</p>
+                                <p className="text-gray-300 text-sm mb-2">Estado: {cita.estado}</p>
+                                <p className="text-gray-300 text-sm mb-2">Costo: ${cita.costo}</p>
+                                <p className="text-gray-300 text-sm mb-4">Notas: {cita.notas}</p>
                                 <div className="flex justify-end">
-                                    <Link to={`/edit/${cita._id}`} className="text-indigo-400 hover:text-indigo-600 mr-4">Editar</Link>
-                                    <button onClick={() => deleteCita(cita._id)} className="text-red-400 hover:text-red-600">
+                                    <Link to={`/edit/${cita._id}`}
+                                          className="text-indigo-400 hover:text-indigo-600 mr-4">Editar</Link>
+                                    <button onClick={() => deleteCita(cita._id)}
+                                            className="text-red-400 hover:text-red-600">
                                         Eliminar
                                     </button>
                                 </div>
