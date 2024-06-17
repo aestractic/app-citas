@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import CitaList from './components/CitaList.jsx';
@@ -7,6 +7,7 @@ import EditCita from './components/EditCita.jsx';
 import Login from './components/Login';
 import Register from './components/Register';
 
+
 function App() {
     const token = localStorage.getItem('token');
 
@@ -14,7 +15,8 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
+
+                {/*<Route path="/register" element={<Register />} />*/}
 
                 <Route element={<ProtectedRoutesWithNavbar />}>
                     <Route path="/" element={<CitaList />} />
