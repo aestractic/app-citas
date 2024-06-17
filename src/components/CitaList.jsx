@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 const CitaList = () => {
     const [citas, setCitas] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const token = localStorage.getItem('token');
 
     useEffect(() => {
@@ -32,6 +33,8 @@ const CitaList = () => {
         }
     };
 
+    const filteredCitas = citas.filter(cita => cita.mascota.toLowerCase().includes(searchTerm.toLowerCase()));
+
     return (
         <div className="bg-gray-900 min-h-screen p-8">
             <div className="max-w-7xl mx-auto">
@@ -42,8 +45,17 @@ const CitaList = () => {
                     </Link>
                 </div>
 
+
+                <input
+                    type="text"
+                    placeholder="Introduce el nombre de la mascota..."
+                    className="w-full bg-gray-800 text-white p-2 rounded mb-4"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {citas.map((cita) => (
+                    {filteredCitas.map((cita) => (
                         <div key={cita._id} className="bg-gray-800 rounded-lg overflow-hidden shadow-md">
                             {cita.imagen && (
                                 <img
